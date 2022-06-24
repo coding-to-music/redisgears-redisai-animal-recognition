@@ -104,7 +104,7 @@ rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" 
 
 ## 1. Setup Git LFS on your system. You only have to do this once per repository per machine
 
-From this tutorial:  https://dev.to/jldec/what-is-git-lfs-28db
+From this tutorial: https://dev.to/jldec/what-is-git-lfs-28db
 
 ```java
 git lfs install Git LFS initialized.
@@ -117,7 +117,7 @@ Updated git hooks.
 Git LFS initialized.
 ```
 
-##  2. Choose the type of files you want to track, for examples all ISO images, with git lfs track:
+## 2. Choose the type of files you want to track, for examples all ISO images, with git lfs track:
 
 ```java
 git lfs track "*.pb"
@@ -134,7 +134,8 @@ Resulting in .gitattributes being created with the following content:
 ```java
 git add .gitattributes
 ```
-##  4. Commit, push and work with the files normally:
+
+## 4. Commit, push and work with the files normally:
 
 ```java
 git add .
@@ -214,7 +215,7 @@ make camera
 Output:
 
 ```java
-python3 camera/read_camera.py 
+python3 camera/read_camera.py
 Traceback (most recent call last):
   File "camera/read_camera.py", line 3, in <module>
     import cv2
@@ -234,7 +235,6 @@ pip3 install opencv-python
 docker-compose up
 ```
 
-
 ## make camera
 
 ```java
@@ -244,7 +244,7 @@ make camera
 Output:
 
 ```java
-python3 camera/read_camera.py 
+python3 camera/read_camera.py
 Connected to Redis
 Operating in camera mode
 [ WARN:0@0.208] global /io/opencv/modules/videoio/src/cap_v4l.cpp (902) open VIDEOIO(V4L2:/dev/video0): can't open camera by index
@@ -279,13 +279,13 @@ export ANIMAL="[cat|dog]"
 printenv | grep ANIMAL
 ```
 
-Output 
+Output
 
 ```
 ANIMAL=[cat|dog]
 ```
 
-## Run the test 
+## Run the test
 
 ```
 python camera/read_camera.py --test
@@ -300,6 +300,50 @@ Traceback (most recent call last):
   File "camera/read_camera.py", line 99, in <module>
     img = cv2.resize(img0, (IMAGE_WIDTH, IMAGE_HEIGHT))
 cv2.error: OpenCV(4.4.0) /tmp/pip-req-build-h2062vqd/opencv/modules/imgproc/src/resize.cpp:3929: error: (-215:Assertion failed) !ssize.empty() in function 'resize'
+```
+
+## The docker console log shows this (relating to the above test)
+
+```
+redis_1    | 1:M 24 Jun 2022 06:42:45.857 * Ready to accept connections
+redis_1    | 1:M 24 Jun 2022 06:42:46.795 # <ai> backend TF not loaded, will try loading default backend
+redis_1    | 1:M 24 Jun 2022 06:42:46.866 * <ai> TF backend loaded from /usr/lib/redis/modules/backends/redisai_tensorflow/redisai_tensorflow.so
+redis_1    | 1:M 24 Jun 2022 06:42:46.887 # <ai> Invalid GraphDef
+app_1      | Loading model - Traceback (most recent call last):
+app_1      |   File "/app/init.py", line 39, in <module>
+app_1      |     res = conn.execute_command('AI.MODELSTORE', 'mobilenet:model', 'TF', 'CPU', 'INPUTS', '1', 'input', 'OUTPUTS', '1', 'MobilenetV2/Predictions/Reshape_1', 'BLOB', model)
+app_1      |   File "/usr/local/lib/python3.9/dist-packages/redis/client.py", line 1235, in execute_command
+app_1      |     return conn.retry.call_with_retry(
+app_1      |   File "/usr/local/lib/python3.9/dist-packages/redis/retry.py", line 46, in call_with_retry
+app_1      |     return do()
+app_1      |   File "/usr/local/lib/python3.9/dist-packages/redis/client.py", line 1236, in <lambda>
+app_1      |     lambda: self._send_command_parse_response(
+app_1      |   File "/usr/local/lib/python3.9/dist-packages/redis/client.py", line 1212, in _send_command_parse_response
+app_1      |     return self.parse_response(conn, command_name, **options)
+app_1      |   File "/usr/local/lib/python3.9/dist-packages/redis/client.py", line 1251, in parse_response
+app_1      |     response = connection.read_response()
+app_1      |   File "/usr/local/lib/python3.9/dist-packages/redis/connection.py", line 837, in read_response
+app_1      |     raise response
+app_1      | redis.exceptions.ResponseError: Invalid GraphDef
+weball_1   | Redis Labs - app listening on port 3000!
+webcats_1  | Redis Labs - app listening on port 3000!
+redisgears-redisai-animal-recognition_app_1 exited with code 1
+webcats_1  | received: connected
+weball_1   | received: connected
+```
+
+## make test
+
+```
+make test
+```
+
+Output:
+
+```
+Testing cats ...
+cats: FAIL
+make: *** [Makefile:24: test] Error 1
 ```
 
 [![license](https://img.shields.io/github/license/RedisGears/AnimalRecognitionDemo.svg)](https://github.com/RedisGears/AnimalRecognitionDemo)
