@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/RedisGears/AnimalRecognitionDemo/issues"
   },
-  "homepage": "https://github.com/RedisGears/AnimalRecognitionDemo#readme"
+  "homepage": "https://github.com/RedisGears/AnimalRecognitionDemo#readme",
+  "dependencies": {
+    "kill-port": "^2.0.1"
+  }
 }

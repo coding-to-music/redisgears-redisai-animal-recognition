@@ -190,6 +190,118 @@ Output:
 111479258f * app/models/mobilenet_v2_1.4_224_frozen.pb
 ```
 
+## make start
+
+```java
+make start
+```
+
+Output:
+
+```java
+Starting redisgears-redisai-animal-recognition_redis_1 ... done
+Creating redisgears-redisai-animal-recognition_app_1     ... done
+Creating redisgears-redisai-animal-recognition_weball_1  ... done
+Creating redisgears-redisai-animal-recognition_webcats_1 ... done
+```
+
+## make camera
+
+```java
+make camera
+```
+
+Output:
+
+```java
+python3 camera/read_camera.py 
+Traceback (most recent call last):
+  File "camera/read_camera.py", line 3, in <module>
+    import cv2
+ModuleNotFoundError: No module named 'cv2'
+make: *** [Makefile:39: camera] Error 1
+```
+
+## pip3 install opencv-python
+
+```java
+pip3 install opencv-python
+```
+
+## start redis and other services
+
+```java
+docker-compose up
+```
+
+
+## make camera
+
+```java
+make camera
+```
+
+Output:
+
+```java
+python3 camera/read_camera.py 
+Connected to Redis
+Operating in camera mode
+[ WARN:0@0.208] global /io/opencv/modules/videoio/src/cap_v4l.cpp (902) open VIDEOIO(V4L2:/dev/video0): can't open camera by index
+Traceback (most recent call last):
+  File "camera/read_camera.py", line 83, in <module>
+    for (count, img) in loader:
+  File "camera/read_camera.py", line 35, in __next__
+    assert ret_val, 'Webcam Error'
+AssertionError: Webcam Error
+make: *** [Makefile:39: camera] Error 1
+```
+
+## run the camera process in test mode (without streaming from your camera):
+
+```java
+ANIMAL=[cat|dog] python camera/read_camera.py --test
+```
+
+```java
+dog]: command not found
+```
+
+## export a value for ANIMAL using quotes
+
+```
+export ANIMAL="[cat|dog]"
+```
+
+## ensure the value is correct for ANIMAL
+
+```
+printenv | grep ANIMAL
+```
+
+Output 
+
+```
+ANIMAL=[cat|dog]
+```
+
+## Run the test 
+
+```
+python camera/read_camera.py --test
+```
+
+Output
+
+```
+Connected to Redis
+Operating in test mode with image [cat|dog].jpg
+Traceback (most recent call last):
+  File "camera/read_camera.py", line 99, in <module>
+    img = cv2.resize(img0, (IMAGE_WIDTH, IMAGE_HEIGHT))
+cv2.error: OpenCV(4.4.0) /tmp/pip-req-build-h2062vqd/opencv/modules/imgproc/src/resize.cpp:3929: error: (-215:Assertion failed) !ssize.empty() in function 'resize'
+```
+
 [![license](https://img.shields.io/github/license/RedisGears/AnimalRecognitionDemo.svg)](https://github.com/RedisGears/AnimalRecognitionDemo)
 [![Animal Recognition](https://github.com/RedisGears/AnimalRecognitionDemo/actions/workflows/ci-config.yml/badge.svg)](https://github.com/RedisGears/AnimalRecognitionDemo/actions/workflows/ci-config.yml)
 [![Forum](https://img.shields.io/badge/Forum-RedisGears-blue)](https://forum.redislabs.com/c/modules/redisgears)
