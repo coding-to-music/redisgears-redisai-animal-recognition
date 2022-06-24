@@ -14,7 +14,9 @@
     "vercel": "npm run deploy && vercel --prod",
     "make:start": "make start",
     "make:camera": "make camera",
-    "make:xxxx": "make start"
+    "make:help": "make help",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down"
   },
   "repository": {
     "type": "git",
