@@ -33,6 +33,18 @@ https://github.com/RedisGears/RedisGears/blob/master/docs/redisai.md
 
 ```
 
+## GitHub
+
+```java
+git init
+git add .
+git remote remove origin
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:coding-to-music/redisgears-redisai-animal-recognition.git
+git push -u origin main
+```
+
 ## Getting error about missing lfs object so can't push to GitHub
 
 ```
@@ -72,16 +84,65 @@ Hooks for this repository have been removed.
 Global Git LFS configuration has been removed.
 ```
 
-## GitHub
+## Needed to delete the reference & file since it is unavailable:
 
 ```java
-git init
+rm app/models/mobilenet_v2_1.4_224_fronzen.pb
+```
+
+## download the file and put the full file in app/models
+
+```java
+
+```
+
+## 1. Setup Git LFS on your system. You only have to do this once per repository per machine
+
+```java
+git lfs install Git LFS initialized.
+```
+
+Output:
+
+```
+Updated git hooks.
+Git LFS initialized.
+```
+
+##  2. Choose the type of files you want to track, for examples all ISO images, with git lfs track:
+
+```java
+git lfs track "*.pb"
+```
+
+Resulting in .gitattributes being created with the following content:
+
+```
+*.pb filter=lfs diff=lfs merge=lfs -text
+```
+
+## 3. The above stores this information in gitattributes files, so that file need to be added to the repository:
+
+```java
+git add .gitattributes
+```
+##  4. Commit, push and work with the files normally:
+
+```java
 git add .
-git remote remove origin
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:coding-to-music/redisgears-redisai-animal-recognition.git
-git push -u origin main
+git commit -m "Add Big File using LFS"
+git push
+
+```
+## 
+
+```java
+
+```
+## 
+
+```java
+
 ```
 
 [![license](https://img.shields.io/github/license/RedisGears/AnimalRecognitionDemo.svg)](https://github.com/RedisGears/AnimalRecognitionDemo)
