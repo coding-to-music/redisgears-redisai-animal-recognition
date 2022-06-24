@@ -8,7 +8,8 @@
   },
   "scripts": {
     "install:gitlfs": "sudo apt update && sudo apt install git-lfs",
-    "view:lfsfiles": "git lfs ls-files",
+    "track:lfs": "git lfs track",
+    "view:lfs": "git lfs ls-files",
     "deploy": "git add . && git commit -m Build && git push",
     "vercel": "npm run deploy && vercel --prod",
     "make:start": "make start",
