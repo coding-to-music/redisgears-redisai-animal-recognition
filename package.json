@@ -1,0 +1,29 @@
+{
+  "name": "redisgears-redisai-animal-recognition",
+  "version": "1.0.0",
+  "description": "[![license](https://img.shields.io/github/license/RedisGears/AnimalRecognitionDemo.svg)](https://github.com/RedisGears/AnimalRecognitionDemo) [![Animal Recognition](https://github.com/RedisGears/AnimalRecognitionDemo/actions/workflows/ci-config.yml/badge.svg)](https://github.com/RedisGears/AnimalRecognitionDemo/actions/workflows/ci-config.yml) [![Forum](https://img.shields.io/badge/Forum-RedisGears-blue)](https://forum.redislabs.com/c/modules/redisgears) [![Discord](https://img.shields.io/discord/697882427875393627)](https://discord.gg/6yaVTtp)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "install:gitlfs": "sudo apt update && sudo apt install git-lfs",
+    "view:lfsfiles": "git lfs ls-files",
+    "deploy": "git add . && git commit -m Build && git push",
+    "vercel": "npm run deploy && vercel --prod",
+    "make:start": "make start",
+    "make:camera": "make camera",
+    "make:xxxx": "make start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RedisGears/AnimalRecognitionDemo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RedisGears/AnimalRecognitionDemo/issues"
+  },
+  "homepage": "https://github.com/RedisGears/AnimalRecognitionDemo#readme"
+}
