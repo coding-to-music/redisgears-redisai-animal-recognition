@@ -27,6 +27,10 @@ https://oss.redislabs.com/redisai/
 
 https://github.com/RedisGears/RedisGears/blob/master/docs/redisai.md
 
+https://dev.to/jldec/what-is-git-lfs-28db
+
+https://www.atlassian.com/git/tutorials/git-lfs
+
 ## Environment variables:
 
 ```java
@@ -90,13 +94,17 @@ Global Git LFS configuration has been removed.
 rm app/models/mobilenet_v2_1.4_224_fronzen.pb
 ```
 
-## download the file and put the full file in app/models
+## download the file from the original repo and put the full file in app/models
 
 ```java
+# Use this to bring the file here:
 
+rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress /home/tmc/ap/cat-detection-video/mobilenet_v2_1.4_224_frozen.pb TomPod:/mnt/volume_nyc1_01/redisgears-redisai-animal-recognition/app/models/
 ```
 
 ## 1. Setup Git LFS on your system. You only have to do this once per repository per machine
+
+From this tutorial:  https://dev.to/jldec/what-is-git-lfs-28db
 
 ```java
 git lfs install Git LFS initialized.
@@ -131,18 +139,55 @@ git add .gitattributes
 ```java
 git add .
 git commit -m "Add Big File using LFS"
-git push
+```
+
+Output:
 
 ```
-## 
+[main e957702] Add Big File using LFS
+ 3 files changed, 72 insertions(+), 7 deletions(-)
+ create mode 100644 .gitattributes
+ create mode 100644 app/models/mobilenet_v2_1.4_224_frozen.pb
+```
+
+## Push to remote
 
 ```java
+Enumerating objects: 10, done./1), 24 MB | 0 B/s
+Counting objects: 100% (10/10), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 1.17 KiB | 1.17 MiB/s, done.
+Total 7 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:coding-to-music/redisgears-redisai-animal-recognition.git
+   10320c4..e957702  main -> main
+```
+
+## Command: git lfs track
+
+```java
+git lfs track
+```
+
+Output:
 
 ```
-## 
+Listing tracked patterns
+    *.pb (.gitattributes)
+Listing excluded patterns
+```
+
+## Command: git lfs ls-files
 
 ```java
+git lfs ls-files
+```
 
+Output:
+
+```
+111479258f * app/models/mobilenet_v2_1.4_224_frozen.pb
 ```
 
 [![license](https://img.shields.io/github/license/RedisGears/AnimalRecognitionDemo.svg)](https://github.com/RedisGears/AnimalRecognitionDemo)
