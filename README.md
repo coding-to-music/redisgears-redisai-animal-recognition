@@ -19,6 +19,8 @@ https://github.com/coding-to-music/redisgears-redisai-animal-recognition
 
 https://redisgears-redisai-animal-recognition.vercel.app
 
+https://github.com/RedisGears/AnimalRecognitionDemo/issues/30
+
 From / By https://github.com/RedisGears/AnimalRecognitionDemo
 
 https://oss.redislabs.com/redisgears/
@@ -350,6 +352,126 @@ make: *** [Makefile:24: test] Error 1
 [![Animal Recognition](https://github.com/RedisGears/AnimalRecognitionDemo/actions/workflows/ci-config.yml/badge.svg)](https://github.com/RedisGears/AnimalRecognitionDemo/actions/workflows/ci-config.yml)
 [![Forum](https://img.shields.io/badge/Forum-RedisGears-blue)](https://forum.redislabs.com/c/modules/redisgears)
 [![Discord](https://img.shields.io/discord/697882427875393627)](https://discord.gg/6yaVTtp)
+
+# Got feedback from this issue:
+
+https://github.com/RedisGears/AnimalRecognitionDemo/issues/30
+
+Starting with these:
+
+- `export VERBOSE=1`
+- `make clean`
+- `sudo make setup`
+- `make build`
+
+Got this when I ran `make setup`
+
+```
+make setup
+```
+
+Output:
+
+```
+chmod: changing permissions of '/usr/local/bin/docker-compose': Operation not permitted
+make: *** [Makefile:43: setup] Error 1
+```
+
+Got this when I ran `sudo make setup`
+
+```
+sudo make setup
+```
+
+Output:
+
+```
+Git LFS initialized.
+Error: failed to call git rev-parse --git-dir: exit status 128 : fatal: unsafe repository ('/mnt/volume_nyc1_01/redisgears-redisai-animal-recognition' is owned by someone else)
+To add an exception for this directory, call:
+
+        git config --global --add safe.directory /mnt/volume_nyc1_01/redisgears-redisai-animal-recognition
+
+Not in a git repository.
+```
+
+Ran this, no error messages:
+
+```
+git config --global --add safe.directory /mnt/volume_nyc1_01/redisgears-redisai-animal-recognition
+```
+
+Ran `make build` and saw no errors
+
+Because I do not have a camera, I will only use the test, not the camera mode:
+
+- `make start` to run docker-compose for Redis in detached mode (don't use for this testing)
+- `docker-compose up` to watch the redis log messages
+
+Here is the tail of the logs, most of it looks good, there is lots before this that looks good too:
+
+```
+redis_1    | 1:M 05 Jul 2022 21:50:04.257 * <rg> Successfully installed numpy-1.21.6 opencv-python-headless-4.4.0.46
+redis_1    |
+redis_1    | WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+redis_1    | 1:M 05 Jul 2022 21:50:04.485 * <ai> TF backend loaded from /usr/lib/redis/modules/backends/redisai_tensorflow/redisai_tensorflow.so
+redis_1    | 2022-07-05 21:50:04.560832: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+redis_1    | To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+redis_1    | 1:M 05 Jul 2022 21:50:04.804 # <search> Skip background reindex scan, redis version contains loaded event.
+redis_1    | 1:M 05 Jul 2022 21:50:04.804 * DB loaded from disk: 10.248 seconds
+redis_1    | 1:M 05 Jul 2022 21:50:04.804 * Ready to accept connections
+app_1      | Discovered evidence of a previous initialization - skipping.
+redisgears-redisai-animal-recognition_app_1 exited with code 0
+weball_1   | received: connected
+```
+
+Using a different terminal window:
+
+- do not have docker running in the other window, this will be the running process for the test
+- `export ANIMAL=cat` or `export ANIMAL=dog`
+- `make test` to run the test against the video using either DOG or CAT as our target
+
+```
+make clean
+make setup
+make build
+export ANIMAL=dog
+make test
+```
+
+```
+<lots of success messages above>
+1657058108889-1  addToGraphRunner: count= 140
+1657058108947-0  addToGraphRunner: animal= golden_retriever
+1657058108990-0  shouldTakeFrame 141 False
+1657058109091-0  shouldTakeFrame 142 False
+1657058109192-0  shouldTakeFrame 143 False
+1657058109292-0  shouldTakeFrame 144 False
+1657058109394-0  shouldTakeFrame 145 False
+1657058109494-0  shouldTakeFrame 146 False
+1657058109595-0  shouldTakeFrame 147 False
+1657058109696-0  shouldTakeFrame 148 False
+1657058109797-0  shouldTakeFrame 149 False
+1657058109898-0  shouldTakeFrame 150 True
+1657058109899-0  addToGraphRunner: count= 150
+1657058109956-0  addToGraphRunner: animal= golden_retriever
+1657058109999-0  shouldTakeFrame 151 False
+1657058110100-0  shouldTakeFrame 152 False
+1657058110201-0  shouldTakeFrame 153 False
+1657058110302-0  shouldTakeFrame 154 False
+1657058110403-0  shouldTakeFrame 155 False
+1657058110503-0  shouldTakeFrame 156 False
+1657058110604-0  shouldTakeFrame 157 False
+Stopping camera.catndogs ... done
+Stopping redis.catndogs  ... done
+Removing camera.catndogs ... done
+Removing app.catndogs    ... done
+Removing redis.catndogs  ... done
+Removing network catsndogs_default
+dogs: OK
+```
+
+So, success !!!
 
 # AnimalRecognitionDemo
 
